@@ -1,0 +1,64 @@
+#!/bin/bash
+
+set -euo pipefail
+
+targets=(
+	appcache
+	iconcache
+	spotlight
+	preferences
+)
+
+function help {
+	echo "The rebuild utility provides a simple interface to rebuild caches and databases."
+	usage
+}
+
+function usage {
+	echo -en "\nusage: rebuild (all"
+	for t in ${targets[*]}; do
+		echo -n " | $t"
+	done
+	echo ")"
+	echo "       rebuild help"
+	exit $*
+}
+
+if [ $# -eq 0 ]; then
+	>&2 echo "rebuild: target missing"
+	usage 1
+fi
+
+for t in $*; do
+	case $t in
+		(all)
+			$0 ${targets[*]}
+			;;
+		(iconcache)
+			sudo find /private/var/folders -name com.apple.dock.iconcache -exec rm {} \;
+			sudo find /private/var/folders -name com.apple.iconservices -exec rm -rf {} \;
+			sudo rm -rf /Library/Caches/com.apple.iconservices.store
+			;;
+		(appcache)
+			cd /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support
+			./lsregister -kill -r -domain local-domain system -domain user -seed
+			;;
+		(spotlight)
+			sudo mdutil -E /
+			;;
+		(preferences)
+			killall -u "$USER" cfprefsd
+			;;
+		(help|--help)
+			help
+			;;
+		(*)
+			alt=($(which -a rebuild))
+			if [ ${#alt[@]} -gt 1 ]; then
+				${alt[1]} "$@"
+			else
+				>&2 echo "Unknown target: $t"
+				usage 1
+			fi
+	esac
+done
