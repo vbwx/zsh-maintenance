@@ -45,8 +45,6 @@ for t in $*; do
 		(apt)
 			apt-get update
 			apt-get -f -y dist-upgrade
-			apt-get autoremove
-			apt-get autoclean
 			;;
 		(prezto)
 			cd "${ZDOTDIR:-$HOME}/.zprezto"
@@ -83,7 +81,6 @@ for t in $*; do
 			;;
 		(gem)
 			gem update -N
-			gem cleanup
 			;;
 		(vim)
 			[[ -f "$HOME/.vim/autoload/plug.vim" ]] && vim +PlugUpgrade +PlugUpdate +qall

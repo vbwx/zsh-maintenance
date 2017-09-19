@@ -46,9 +46,6 @@ for t in $*; do
 		(brew)
 			brew update
 			brew upgrade
-			brew cleanup -s
-			brew cask cleanup
-			brew prune
 			;;
 		(prezto)
 			cd "${ZDOTDIR:-$HOME}/.zprezto"
@@ -76,7 +73,7 @@ for t in $*; do
 		(pyenv)
 			cd "$(pyenv root)"
 			git pull
-			;;			
+			;;
 		(cpan)
 			cpan -u
 			;;
@@ -85,7 +82,6 @@ for t in $*; do
 			;;
 		(gem)
 			gem update -N
-			gem cleanup
 			;;
 		(vim)
 			[ -f "$HOME/.vim/autoload/plug.vim" ] && vim +PlugUpgrade +PlugUpdate +qall

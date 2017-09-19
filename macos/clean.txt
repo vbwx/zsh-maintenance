@@ -1,0 +1,35 @@
+~/Library/Caches/*
+/private/var/folders/qz/*/{C,T}
+~/Library/Developer/Xcode/iOS Device*
+~/Library/Application Support/Java/(old folders)
+/Applications/Google Chrome.app/Contents/Versions/(old folders)
+/Library/Caches/*
+/Library/Logs/DiagnosticReports
+/private/var/db/diagnostics
+/Library/Logs/SleepWakeDebug
+/private/var/log/asl
+~/Library/Preferences/com.apple.LaunchServices.QuarantineEvents*
+~/Library/Containers/com.apple.iWork.Pages/Data/Library/Caches
+~/Library/Containers/com.apple.Notes/Data/Library/Caches
+~/Pictures/Photos Library.photoslibrary/iPod Photo Cache
+~/Pictures/Photos Library.photoslibrary/Apple TV Photo Cache
+~/Library/Application Support/MobileSync/Backup/(old folders)
+~/Library/iTunes/{iPhone,iPad} Software Updates/*
+~/Library/iTunes/Device Support/*
+~/Library/iTunes/Mobile Backups/(old folders)
+~/Music/**/iTunes/Previous iTunes Libraries/(old files)
+~/Music/**/iTunes/Album Artwork/*
+~/Library/Containers/com.apple.mail/Data/Library/Mail Downloads
+
+review:
+~/Library/Preferences
+~/Library/Containers
+~/Music/**/Mobile Applications
+~/Music/**/Downloads
+/Library/Printers
+
+brew cleanup -s
+brew cask cleanup
+brew prune
+
+gem cleanup

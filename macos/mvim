@@ -74,7 +74,7 @@ case "$name" in
 	*man)
 		opts="$opts -R"
 		cmd="Man $1 $2 | silent only"
-		shift; shift
+		shift 2
 		;;
 	vi)
 		opts="--noplugin"
