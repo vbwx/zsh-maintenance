@@ -36,8 +36,7 @@ for t in $*; do
 			$0 ${targets[*]}
 			;;
 		(iconcache)
-			sudo find /private/var/folders -name com.apple.dock.iconcache -exec rm {} \;
-			sudo find /private/var/folders -name com.apple.iconservices -exec rm -rf {} \;
+			sudo rm -rf $TMPDIR/com.apple.iconservices/* $TMPDIR/com.apple.dock.iconcache/*
 			sudo rm -rf /Library/Caches/com.apple.iconservices.store
 			;;
 		(appcache)

@@ -1,9 +1,7 @@
-~/Library/Caches/*
-/private/var/folders/qz/*/{C,T}
+~/Library/Caches/Homebrew/*
 ~/Library/Developer/Xcode/iOS Device*
 ~/Library/Application Support/Java/(old folders)
 /Applications/Google Chrome.app/Contents/Versions/(old folders)
-/Library/Caches/*
 /Library/Logs/DiagnosticReports
 /private/var/db/diagnostics
 /Library/Logs/SleepWakeDebug
