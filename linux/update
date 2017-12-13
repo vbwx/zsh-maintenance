@@ -119,6 +119,8 @@ for t in $*; do
 				for bundle in ~/.vim/bundle/*; do
 					git -C "$bundle" pull --recurse-submodules
 				done
+			else
+				>&2 echo "update: no Vim plugin manager found"
 			fi
 			;;
 		(texlive)
