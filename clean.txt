@@ -1,0 +1,11 @@
+/usr/local/Caskroom/*/*/*
+~/.gem
+~/.cpan
+~/.node-gyp
+~/.npm
+~/.composer/cache
+
+brew cleanup
+rm -rf "$(brew --cache)"
+
+gem cleanup

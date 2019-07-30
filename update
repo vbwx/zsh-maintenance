@@ -4,7 +4,7 @@ set -euo pipefail
 IFS=$'\n\t'
 
 targets=(
-	apt
+	brew
 	cpan
 	gem
 	npm
@@ -19,16 +19,17 @@ targets=(
 )
 
 function help {
-	printf "The update utility provides a simple interface to perform updates of programs and packages.\n"
+	echo "The update utility provides a simple interface to perform updates of programs and packages."
 	usage
 }
 
 function usage {
-	printf "\nusage: update (all"
+	echo -en "\nusage: update (all"
 	for t in ${targets[*]}; do
-		printf " | $t"
+		echo -n " | $t"
 	done
-	printf ")\n       update help\n"
+	echo ")"
+	echo "       update help"
 	exit $*
 }
 
@@ -56,8 +57,8 @@ function ulsudo {
 	fi
 }
 
-if [[ $# -eq 0 ]]; then
-	>&2 printf "update: target missing\n"
+if [ $# -eq 0 ]; then
+	>&2 echo "update: target missing"
 	usage 1
 fi
 
@@ -66,9 +67,9 @@ for t in $*; do
 		(all)
 			$0 ${targets[*]}
 			;;
-		(apt)
-			apt-get update
-			apt-get -f -y dist-upgrade
+		(brew)
+			brew update
+			brew upgrade
 			;;
 		(nvm)
 			cd "$NVM_DIR"
@@ -93,10 +94,10 @@ for t in $*; do
 			git pull
 			;;
 		(cpan)
-			cpan -u
+			ulsudo cpan -u
 			;;
 		(pip)
-			pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | ulsudo +python xargs -n1 pip install -U
+			pip freeze --local 2> /dev/null | grep -v '^\-e' | cut -d = -f 1 | ulsudo +python xargs -n1 pip install -U
 			;;
 		(pip3)
 			pip3 freeze --local 2> /dev/null | grep -v '^\-e' | cut -d = -f 1 | ulsudo +python xargs -n1 pip3 install -U
@@ -124,18 +125,13 @@ for t in $*; do
 			fi
 			;;
 		(texlive)
-			ulsudo tlmgr update --all
+			ulsudo tlmgr update --self --all --no-auto-install && ulsudo tlmgr backup --clean --all
 			;;
 		(help|--help)
 			help
 			;;
 		(*)
-			alt=($(which -a update))
-			if [[ ${#alt[@]} -gt 1 ]]; then
-				${alt[1]} "$@"
-			else
-				>&2 printf "update: unknown target: $t\n"
-				usage 1
-			fi
+			>&2 echo "update: unknown target: $t"
+			usage 1
 	esac
 done

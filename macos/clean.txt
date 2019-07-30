@@ -1,9 +1,0 @@
-~/Library/Caches/Homebrew/*
-/usr/local/Caskroom
-
-brew cleanup
-brew cask cleanup
-brew prune
-rm -rf "$(brew --cache)"
-
-gem cleanup
