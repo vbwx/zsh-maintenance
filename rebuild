@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -euo pipefail
+set -uo pipefail
 IFS=$'\n\t'
 
 targets=(
@@ -10,18 +10,12 @@ targets=(
 	preferences
 )
 
-function help {
-	echo "The rebuild utility provides a simple interface to rebuild caches and databases."
-	usage
-}
-
 function usage {
-	echo -en "\nusage: rebuild (all"
+	printf "\nUsage: rebuild all"
 	for t in ${targets[*]}; do
-		echo -n " | $t"
+		printf "|$t"
 	done
-	echo ")"
-	echo "       rebuild help"
+	printf "\n       rebuild help\n"
 	exit $*
 }
 
@@ -40,17 +34,18 @@ for t in $*; do
 			sudo rm -rf /Library/Caches/com.apple.iconservices.store
 			;;
 		(appcache)
-			cd /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support
-			./lsregister -kill -r -domain local-domain system -domain user -seed
+			sudo /System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister \
+				-kill -seed -r -f -v -all l,s,u,n
 			;;
 		(spotlight)
-			sudo mdutil -E /
+			mdutil -E -i on /
 			;;
 		(preferences)
 			killall -u "$USER" cfprefsd
 			;;
 		(help|--help)
-			help
+			echo "The rebuild utility provides a simple interface to rebuild caches and databases."
+			usage
 			;;
 		(*)
 			alt=($(which -a rebuild))

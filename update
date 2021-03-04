@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -euo pipefail
+set -uo pipefail
 IFS=$'\n\t'
 
 targets=(
@@ -18,18 +18,12 @@ targets=(
 	vim
 )
 
-function help {
-	echo "The update utility provides a simple interface to perform updates of programs and packages."
-	usage
-}
-
 function usage {
-	echo -en "\nusage: update (all"
+	printf "\nUsage: update all"
 	for t in ${targets[*]}; do
-		echo -n " | $t"
+		printf "|$t"
 	done
-	echo ")"
-	echo "       update help"
+	printf "\n       update help\n"
 	exit $*
 }
 
@@ -128,7 +122,8 @@ for t in $*; do
 			ulsudo tlmgr update --self --all --no-auto-install && ulsudo tlmgr backup --clean --all
 			;;
 		(help|--help)
-			help
+			echo "The update utility provides a simple interface to perform updates of programs and packages."
+			usage
 			;;
 		(*)
 			>&2 echo "update: unknown target: $t"
