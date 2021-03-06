@@ -19,7 +19,7 @@ function usage {
 	exit $*
 }
 
-if [ $# -eq 0 ]; then
+if [[ $# -eq 0 ]]; then
 	>&2 echo "rebuild: target missing"
 	usage 1
 fi
@@ -30,8 +30,7 @@ for t in $*; do
 			$0 ${targets[*]}
 			;;
 		(iconcache)
-			sudo rm -rf $TMPDIR/com.apple.iconservices/* $TMPDIR/com.apple.dock.iconcache/*
-			sudo rm -rf /Library/Caches/com.apple.iconservices.store
+			rm -rf /Library/Caches/com.apple.iconservices.store
 			;;
 		(appcache)
 			sudo /System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister \
@@ -49,7 +48,7 @@ for t in $*; do
 			;;
 		(*)
 			alt=($(which -a rebuild))
-			if [ ${#alt[@]} -gt 1 ]; then
+			if [[ ${#alt[@]} -gt 1 ]]; then
 				${alt[1]} "$@"
 			else
 				>&2 echo "Unknown target: $t"

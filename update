@@ -51,7 +51,7 @@ function ulsudo {
 	fi
 }
 
-if [ $# -eq 0 ]; then
+if [[ $# -eq 0 ]]; then
 	>&2 echo "update: target missing"
 	usage 1
 fi
