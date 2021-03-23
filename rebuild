@@ -34,7 +34,9 @@ for t in $*; do
 			;;
 		(appcache)
 			sudo /System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister \
-				-kill -seed -r -f -v -all l,s,u,n
+				-kill -r -f -v -all s,l,u
+			sudo /System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister \
+				-seed -r -f -v
 			;;
 		(spotlight)
 			mdutil -E -i on /
